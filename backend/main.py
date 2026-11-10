@@ -73,7 +73,7 @@ async def process(req: ProcessRequest, authorization: Optional[str] = Header(Non
         try:
             meta = (await google_request(token, f'https://www.googleapis.com/drive/v3/files/{file_id}', {'fields':'id,name,mimeType,size'})).json()
             name = meta.get('name','')
-            if not name.lower().endswith(('.mp3', '.mp4')): raise ValueError('Somente arquivos MP3 ou MP4')
+            if not name.lower().endswith(('.mp3', '.mp4', '.m4a')): raise ValueError('Somente arquivos MP3, MP4 ou M4A')
             if int(meta.get('size',0)) > 24 * 1024 * 1024: raise ValueError('MP3 acima de 24 MB; divida o áudio')
             audio = (await google_request(token, f'https://www.googleapis.com/drive/v3/files/{file_id}', {'alt':'media'})).content
             if len(audio) > 24 * 1024 * 1024: raise ValueError('Arquivo muito grande')
