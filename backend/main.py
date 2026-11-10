@@ -77,7 +77,8 @@ async def process(req: ProcessRequest, authorization: Optional[str] = Header(Non
             if int(meta.get('size',0)) > 24 * 1024 * 1024: raise ValueError('MP3 acima de 24 MB; divida o áudio')
             audio = (await google_request(token, f'https://www.googleapis.com/drive/v3/files/{file_id}', {'alt':'media'})).content
             if len(audio) > 24 * 1024 * 1024: raise ValueError('Arquivo muito grande')
-            transcription = await client.audio.transcriptions.create(model='gpt-4o-mini-transcribe', file=(name,audio,'audio/mpeg'), language='pt')
+            mime_type = 'video/mp4' if name.lower().endswith('.mp4') else 'audio/mpeg'
+            transcription = await client.audio.transcriptions.create(model='gpt-4o-mini-transcribe', file=(name, audio, mime_type), language='pt')
             response = await client.chat.completions.create(model='gpt-4o-mini', temperature=0, response_format={'type':'json_object'}, messages=[{'role':'system','content':PROMPT},{'role':'user','content':transcription.text}])
             data = json.loads(response.choices[0].message.content)
             for item in data.get('visitantes',[]):
