@@ -56,7 +56,7 @@ async def health(): return {'ok': True}
 async def drive_list(req: FolderRequest, authorization: Optional[str] = Header(None)):
     token = await verify(authorization)
     folder = req.folder_id.replace("'", "\\'")
-    q = f"'{folder}' in parents and trashed = false and (mimeType = 'application/vnd.google-apps.folder' or mimeType = 'audio/mpeg' or mimeType = 'audio/mp3' or name contains '.MP3' or name contains '.mp4' or name contains '.MP4' or name contains '.MP3')"
+    q = f"'{folder}' in parents and trashed = false and (mimeType = 'application/vnd.google-apps.folder' or mimeType = 'audio/mpeg' or mimeType = 'audio/mp3' or name contains '.MP3' or name contains '.mp4' or name contains '.MP4' or name contains '.m4a' or name contains '.M4A' or name contains '.MP3')"
     params = {'q':q,'fields':'nextPageToken,files(id,name,mimeType,size)','pageSize':1000,'orderBy':'folder,name'}
     if req.page_token: params['pageToken']=req.page_token
     r = await google_request(token, 'https://www.googleapis.com/drive/v3/files', params)
