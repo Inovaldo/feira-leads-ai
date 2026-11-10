@@ -3,7 +3,7 @@
 </style><script src="config.js"></script><script src="https://accounts.google.com/gsi/client" async defer></script></head><body>
 <header><span style="font-size:36px">🎙️</span><div><h1>Feira Leads AI</h1><div class="muted">Áudios de entrevistas → visitantes → Excel</div></div></header>
 <section><h2>1. Conectar ao Google Drive</h2><p class="muted">Autorize acesso somente com sua conta permitida pelo administrador. Seus MP3 permanecem no Drive.</p><button id="login">Conectar Google Drive</button><span id="identity"></span></section>
-<section><h2>2. Escolher pasta e áudios</h2><div id="path" class="muted">Conecte sua conta para navegar.</div><button id="back" class="folder" disabled>⬅ Voltar</button><button id="all" disabled>Selecionar MP3 desta pasta</button><div id="browser"></div><p id="count"></p><button id="process" disabled>Processar MP3 selecionados</button><p id="status" class="muted"></p></section>
+<section><h2>2. Escolher pasta e áudios</h2><div id="path" class="muted">Conecte sua conta para navegar.</div><button id="back" class="folder" disabled>⬅ Voltar</button><button id="all" disabled>Selecionar áudios desta pasta</button><div id="browser"></div><p id="count"></p><button id="process" disabled>Processar MP3 selecionados</button><p id="status" class="muted"></p></section>
 <section><h2>3. Revisar visitantes e baixar Excel</h2><p class="muted">Corrija os campos antes de exportar. Campos incertos aparecem na coluna Revisão.</p><div id="tableWrap"></div><button id="export" disabled>⬇ Baixar Excel (.xlsx)</button><p id="errors" class="warn"></p></section>
 <script>
 const cfg=window.FEIRA_CONFIG||{}, $=id=>document.getElementById(id);let token='',folder='root',stack=[],files=[],leads=[];
